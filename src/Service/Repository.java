@@ -14,6 +14,10 @@ public class Repository {
     private Map<Integer, Reader> readers = new HashMap<>();
     private final List<Loan> loans = new ArrayList<>();
 
+    public List<Loan> getLoans() {
+        return List.copyOf(loans);
+    }
+
     public void addBook(Book book) {
         if (book == null) {
             throw new NullPointerException();
@@ -77,8 +81,6 @@ public class Repository {
 
         readers.containsValue(reader);
 
-
-
         return  null;
     }
 
@@ -86,8 +88,27 @@ public class Repository {
         return Map.copyOf(readers);
     }
 
-    public void borrowBook(Book book) {
+    public void borrowBook(Book book, Reader reader) {
+        if (book == null || reader == null) {
+            throw new NullPointerException();
+        }
 
+        Book foundBook = findBook(book);
+        if (foundBook == null) {
+            return;
+        }
+
+        Reader foundReader = findReader(reader);
+        if (foundReader == null) {
+            return;
+        }
+
+        for (Loan loan : loans) {
+            if (loan.getBook().equals(book)) {
+                return;
+            }
+        }
+
+        loans.add(new Loan(foundBook, foundReader));
     }
-
 }
