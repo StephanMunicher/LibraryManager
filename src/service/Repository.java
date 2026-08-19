@@ -14,10 +14,6 @@ public class Repository {
     private Map<Integer, Reader> readers = new HashMap<>();
     private final List<Loan> loans = new ArrayList<>();
 
-    public List<Loan> getLoans() {
-        return List.copyOf(loans);
-    }
-
     public void addBook(Book book) {
         if (book == null) {
             throw new NullPointerException();
@@ -108,5 +104,26 @@ public class Repository {
         }
 
         loans.add(new Loan(foundBook, foundReader));
+    }
+
+    public void returnBook(Book book) {
+        if (book == null) {
+            throw new NullPointerException();
+        }
+
+        Book foundBook = findBook(book);
+        if (foundBook == null) {
+            throw new IllegalArgumentException("The book not found!");
+        }
+
+        boolean removed = loans.removeIf(loan -> loan.getBook().equals(foundBook));
+
+        if (!removed) {
+            throw new IllegalStateException("The book is not borrowed!");
+        }
+    }
+
+    public List<Loan> getLoans() {
+        return List.copyOf(loans);
     }
 }
