@@ -95,17 +95,17 @@ public class Repository {
 
         Book foundBook = findBook(book);
         if (foundBook == null) {
-            return;
+            throw new IllegalArgumentException("The book not found!");
         }
 
         Reader foundReader = findReader(reader);
         if (foundReader == null) {
-            return;
+            throw new IllegalArgumentException("The Reader not found!");
         }
 
         for (Loan loan : loans) {
-            if (loan.getBook().equals(book)) {
-                return;
+            if (loan.getBook().equals(foundBook)) {
+                throw new IllegalStateException("The book has already booked by another reader!");
             }
         }
 
