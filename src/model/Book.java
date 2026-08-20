@@ -8,9 +8,8 @@ public class Book {
     private final String author;
     private final int bookYear;
     private final String genre;
-    private boolean available;
 
-    public Book(int id, String title, String author, int bookYear, String genre, boolean available) {
+    public Book(int id, String title, String author, int bookYear, String genre) {
         if (title == null || author == null || genre == null) {
             throw new NullPointerException();
         }
@@ -24,7 +23,6 @@ public class Book {
         this.author = author;
         this.bookYear = bookYear;
         this.genre = genre;
-        this.available = available;
     }
 
     public int getId() {
@@ -45,10 +43,6 @@ public class Book {
 
     public String getGenre() {
         return genre;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
     @Override
@@ -83,7 +77,6 @@ public class Book {
                 ", author = " + author +
                 ", bookYear = " + bookYear +
                 ", genre = " + genre +
-                ", available = " + available +
                 '}';
     }
 }

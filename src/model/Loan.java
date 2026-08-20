@@ -3,8 +3,8 @@ package model;
 import java.util.Objects;
 
 public class Loan {
-    private Reader reader;
-    private Book book;
+    private final Reader reader;
+    private final Book book;
 
     public Loan(Book book, Reader reader) {
         if (book == null || reader == null) {

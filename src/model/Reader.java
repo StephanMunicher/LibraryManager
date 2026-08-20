@@ -12,7 +12,7 @@ public class Reader {
             throw new NullPointerException();
         }
 
-        if (id < 0 || firstName.length() <= 1 || secondName.length() <= 1) {
+        if (id <= 0 || firstName.length() <= 1 || secondName.length() <= 1) {
             throw new IllegalArgumentException();
         }
 
