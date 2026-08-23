@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Repository {
-    private Map<Integer, Book> books = new HashMap<>();
-    private Map<Integer, Reader> readers = new HashMap<>();
+    private final Map<Integer, Book> books = new HashMap<>();
+    private final Map<Integer, Reader> readers = new HashMap<>();
     private final List<Loan> loans = new ArrayList<>();
 
     public void addBook(Book book) {
@@ -22,26 +22,24 @@ public class Repository {
         books.putIfAbsent(book.getId(), book);
     }
 
-    public void removeBook(Book book) {
+    public void removeBook(int bookId) {
+        Book book = books.get(bookId);
+
         if (book == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("The book not found!");
         }
 
-        books.remove(book.getId(), book);
-    }
-
-    public Book findBook(Book book) {
-        if (book == null) {
-            throw new NullPointerException();
-        }
-
-        for (Book libraryBook : books.values()) {
-            if (libraryBook.equals(book)) {
-                return libraryBook;
+        for (Loan loan : loans) {
+            if (loan.getBook().equals(book)) {
+                throw new IllegalStateException("The book is currently borrowed!");
             }
         }
 
-        return null;
+        books.remove(bookId);
+    }
+
+    public Book findBookById(int id) {
+        return books.get(id);
     }
 
     public Map<Integer, Book> getBooks() {
@@ -56,62 +54,52 @@ public class Repository {
         readers.putIfAbsent(reader.getId(), reader);
     }
 
-    public void removeReader(Reader reader) {
+    public void removeReader(int readerId) {
+        Reader reader = readers.get(readerId);
+
         if (reader == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("The reader not found!");
         }
 
-        readers.remove(reader.getId(), reader);
-    }
-
-    public Reader findReader(Reader reader) {
-        if (reader == null) {
-            throw new NullPointerException();
-        }
-
-        for (Reader libraryReader : readers.values()) {
-            if (libraryReader.equals(reader)) {
-                return libraryReader;
+        for (Loan loan : loans) {
+            if (loan.getReader().equals(reader)) {
+                throw new IllegalStateException("The reader has borrowed a book!");
             }
         }
 
-        return  null;
+        readers.remove(readerId);
+    }
+
+    public Reader findReaderById(int id) {
+        return readers.get(id);
     }
 
     public Map<Integer, Reader> getReaders() {
         return Map.copyOf(readers);
     }
 
-    public void borrowBook(Book book, Reader reader) {
-        if (book == null || reader == null) {
-            throw new NullPointerException();
-        }
-
-        Book foundBook = findBook(book);
+    public void borrowBook(int bookId, int readerId) {
+        Book foundBook = findBookById(bookId);
         if (foundBook == null) {
             throw new IllegalArgumentException("The book not found!");
         }
 
-        Reader foundReader = findReader(reader);
+        Reader foundReader = findReaderById(readerId);
         if (foundReader == null) {
             throw new IllegalArgumentException("The Reader not found!");
         }
 
         for (Loan loan : loans) {
             if (loan.getBook().equals(foundBook)) {
-                throw new IllegalStateException("The book has already booked by another reader!");
+                throw new IllegalStateException("The book has already borrowed by another reader!");
             }
         }
 
         loans.add(new Loan(foundBook, foundReader));
     }
 
-    public void returnBook(Book book) {
-        if (book == null) {
-            throw new NullPointerException();
-        }
-
-        Book foundBook = findBook(book);
+    public void returnBook(int bookId) {
+        Book foundBook = findBookById(bookId);
         if (foundBook == null) {
             throw new IllegalArgumentException("The book not found!");
         }
