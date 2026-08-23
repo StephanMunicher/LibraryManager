@@ -49,14 +49,12 @@ public class Reader {
 
         final Reader other = (Reader) obj;
 
-        return this.id == other.id &&
-                this.firstName.equals(other.firstName) &&
-                this.secondName.equals(other.secondName);
+        return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName);
+        return Integer.hashCode(id);
     }
 
     @Override

@@ -57,16 +57,12 @@ public class Book {
 
        final Book other = (Book) obj;
 
-       return this.id == other.id &&
-               this.title.equals(other.title) &&
-               this.author.equals(other.author) &&
-               this.bookYear == other.bookYear &&
-               this.genre.equals(other.genre);
+       return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, bookYear, genre);
+        return Integer.hashCode(id);
     }
 
     @Override
