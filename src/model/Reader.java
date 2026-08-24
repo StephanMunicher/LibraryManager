@@ -33,7 +33,7 @@ public class Reader {
         return secondName;
     }
 
-    public String fullName() {
+    public String getFullName() {
         return secondName + " " + firstName;
     }
 
