@@ -101,4 +101,64 @@ public class Repository {
         }
         loans.add(loan);
     }
+
+    public List<Book> findBooksByAuthor(String author) {
+        return books.values().stream()
+                .filter(b -> author.equals(b.getAuthor()))
+                .toList();
+    }
+
+    public List<Book> findBooksByGenre(String genre) {
+        return books.values().stream()
+                .filter(b -> genre.equals(b.getGenre()))
+                .toList();
+    }
+
+    public List<Book> findBooksByTitle(String title) {
+        return books.values().stream()
+                .filter(b -> title.equals(b.getTitle()))
+                .toList();
+    }
+
+    public List<Book> getAllBooks() {
+        return List.copyOf(books.values());
+    }
+
+    public List<Book> getBorrowedBooks() {
+        return loans.stream()
+                .map(Loan::getBook)
+                .toList();
+    }
+
+    public List<Book> getAvailableBooks() {
+        return books.values().stream()
+                .filter(b -> loans.stream()
+                        .noneMatch(l -> l.getBook().equals(b)))
+                .toList();
+    }
+
+    public List<Reader> getAllReaders() {
+        return List.copyOf(readers.values());
+    }
+
+    public List<Reader> getReadersByFullName(String fullName) {
+        return readers.values().stream()
+                .filter(r -> fullName.equals(r.getFullName()))
+                .toList();
+    }
+
+    public List<Book> getBooksByReader(int readerId) {
+        return loans.stream()
+                .filter(l -> readerId == l.getReader().getId())
+                .map(Loan::getBook)
+                .toList();
+    }
+
+    public Reader getReaderByBook(int bookId) {
+        return loans.stream()
+                .filter(l -> bookId == l.getBook().getId())
+                .map(Loan::getReader)
+                .findFirst()
+                .orElse(null);
+    }
 }
