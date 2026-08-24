@@ -78,19 +78,6 @@ public class Repository {
         return Map.copyOf(readers);
     }
 
-    public void returnBook(int bookId) {
-        Book foundBook = findBookById(bookId);
-        if (foundBook == null) {
-            throw new IllegalArgumentException("The book not found!");
-        }
-
-        boolean removed = loans.removeIf(loan -> loan.getBook().equals(foundBook));
-
-        if (!removed) {
-            throw new IllegalStateException("The book is not borrowed!");
-        }
-    }
-
     public List<Loan> getLoans() {
         return List.copyOf(loans);
     }
@@ -160,5 +147,9 @@ public class Repository {
                 .map(Loan::getReader)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public boolean removeLoan(int bookId) {
+        return loans.removeIf(l -> l.getBook().getId() == bookId);
     }
 }

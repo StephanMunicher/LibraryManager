@@ -32,4 +32,17 @@ public class LibraryService {
 
         repository.addLoan(new Loan(foundBook, foundReader));
     }
+
+    public void returnBook(int bookId) {
+        Book foundBook = repository.findBookById(bookId);
+        if (foundBook == null) {
+            throw new IllegalArgumentException("The book not found!");
+        }
+
+        boolean removed = repository.removeLoan(bookId);
+
+        if (!removed) {
+            throw new IllegalStateException("The book is not borrowed!");
+        }
+    }
 }
