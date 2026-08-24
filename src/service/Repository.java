@@ -78,26 +78,6 @@ public class Repository {
         return Map.copyOf(readers);
     }
 
-    public void borrowBook(int bookId, int readerId) {
-        Book foundBook = findBookById(bookId);
-        if (foundBook == null) {
-            throw new IllegalArgumentException("The book not found!");
-        }
-
-        Reader foundReader = findReaderById(readerId);
-        if (foundReader == null) {
-            throw new IllegalArgumentException("The Reader not found!");
-        }
-
-        for (Loan loan : loans) {
-            if (loan.getBook().equals(foundBook)) {
-                throw new IllegalStateException("The book has already borrowed by another reader!");
-            }
-        }
-
-        loans.add(new Loan(foundBook, foundReader));
-    }
-
     public void returnBook(int bookId) {
         Book foundBook = findBookById(bookId);
         if (foundBook == null) {
@@ -113,5 +93,12 @@ public class Repository {
 
     public List<Loan> getLoans() {
         return List.copyOf(loans);
+    }
+
+    public void addLoan(Loan loan) {
+        if (loan == null) {
+            throw new NullPointerException();
+        }
+        loans.add(loan);
     }
 }
