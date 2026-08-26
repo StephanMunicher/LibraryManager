@@ -4,6 +4,8 @@ import model.Book;
 import model.Loan;
 import model.Reader;
 
+import java.util.List;
+
 public class LibraryService {
     private final Repository repository;
     private final SortService sortService;
@@ -44,5 +46,45 @@ public class LibraryService {
         if (!removed) {
             throw new IllegalStateException("The book is not borrowed!");
         }
+    }
+
+    public List<Book> getAvailableBooksSortedByTitle() {
+        return sortService.sortBooksByTitle(repository.getAvailableBooks());
+    }
+
+    public List<Book> getAvailableBooksSortedByAuthor() {
+        return sortService.sortBooksByAuthor(repository.getAvailableBooks());
+    }
+
+    public List<Book> getAvailableBooksSortedByYear() {
+        return sortService.sortBooksByYear(repository.getAvailableBooks());
+    }
+
+    public List<Book> getBorrowedBooksSortedByTitle() {
+        return sortService.sortBooksByTitle(repository.getBorrowedBooks());
+    }
+
+    public List<Book> getBorrowedBooksSortedByAuthor() {
+        return sortService.sortBooksByAuthor(repository.getBorrowedBooks());
+    }
+
+    public List<Book> getBorrowedBooksSortedByYear() {
+        return sortService.sortBooksByYear(repository.getBorrowedBooks());
+    }
+
+    public List<Book> getAllBooksSortedByTitle() {
+        return sortService.sortBooksByTitle(repository.getAllBooks());
+    }
+
+    public List<Book> getAllBooksSortedByAuthor() {
+        return sortService.sortBooksByAuthor(repository.getAllBooks());
+    }
+
+    public List<Book> getAllBooksSortedByYear() {
+        return sortService.sortBooksByYear(repository.getAllBooks());
+    }
+
+    public List<Reader> getAllReadersSortedByFirstName() {
+        return sortService.sortReadersByFirstName(repository.getAllReaders());
     }
 }
