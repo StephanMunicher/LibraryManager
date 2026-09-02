@@ -4,6 +4,7 @@ import model.Book;
 import model.Loan;
 import model.Reader;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class LibraryService {
@@ -48,43 +49,19 @@ public class LibraryService {
         }
     }
 
-    public List<Book> getAvailableBooksSortedByTitle() {
-        return sortService.sortBooksByTitle(repository.getAvailableBooks());
+    public List<Book> getAllBooksSorted(Comparator<Book> comparator) {
+        return sortService.sortBooks(repository.getAllBooks(), comparator);
     }
 
-    public List<Book> getAvailableBooksSortedByAuthor() {
-        return sortService.sortBooksByAuthor(repository.getAvailableBooks());
+    public List<Reader> getAllReadersSorted(Comparator<Reader> comparator) {
+        return sortService.sortReaders(repository.getAllReaders(), comparator);
     }
 
-    public List<Book> getAvailableBooksSortedByYear() {
-        return sortService.sortBooksByYear(repository.getAvailableBooks());
+    public List<Book> getBorrowedBooksSorted(Comparator<Book> comparator) {
+        return sortService.sortBooks(repository.getBorrowedBooks(), comparator);
     }
 
-    public List<Book> getBorrowedBooksSortedByTitle() {
-        return sortService.sortBooksByTitle(repository.getBorrowedBooks());
-    }
-
-    public List<Book> getBorrowedBooksSortedByAuthor() {
-        return sortService.sortBooksByAuthor(repository.getBorrowedBooks());
-    }
-
-    public List<Book> getBorrowedBooksSortedByYear() {
-        return sortService.sortBooksByYear(repository.getBorrowedBooks());
-    }
-
-    public List<Book> getAllBooksSortedByTitle() {
-        return sortService.sortBooksByTitle(repository.getAllBooks());
-    }
-
-    public List<Book> getAllBooksSortedByAuthor() {
-        return sortService.sortBooksByAuthor(repository.getAllBooks());
-    }
-
-    public List<Book> getAllBooksSortedByYear() {
-        return sortService.sortBooksByYear(repository.getAllBooks());
-    }
-
-    public List<Reader> getAllReadersSortedByFirstName() {
-        return sortService.sortReadersByFirstName(repository.getAllReaders());
+    public List<Book> getAvailableBooksSorted(Comparator<Book> comparator) {
+        return sortService.sortBooks(repository.getAvailableBooks(), comparator);
     }
 }
