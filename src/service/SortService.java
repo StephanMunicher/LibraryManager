@@ -8,30 +8,35 @@ import model.Book;
 import model.Reader;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class SortService {
     public List<Book> sortBooksByTitle(List<Book> books) {
-        List<Book> result = new ArrayList<>(books);
-        result.sort(new BookTitleComparator());
-        return result;
+        return sortBooks(books, new BookTitleComparator());
     }
 
     public List<Book> sortBooksByYear(List<Book> books) {
-        List<Book> result = new ArrayList<>(books);
-        result.sort(new BookYearComparator());
-        return result;
+        return sortBooks(books, new BookYearComparator());
     }
 
     public List<Book> sortBooksByAuthor(List<Book> books) {
-        List<Book> result = new ArrayList<>(books);
-        result.sort(new BookAuthorComparator());
-        return result;
+        return sortBooks(books, new BookAuthorComparator());
     }
 
     public List<Reader> sortReadersByFirstName(List<Reader> readers) {
+        return sortReaders(readers, new ReaderFirstNameComparator());
+    }
+
+    public List<Book> sortBooks(List<Book> books, Comparator<Book> comparator) {
+        List<Book> result = new ArrayList<>(books);
+        result.sort(comparator);
+        return result;
+    }
+
+    public List<Reader> sortReaders(List<Reader> readers, Comparator<Reader> comparator) {
         List<Reader> result = new ArrayList<>(readers);
-        result.sort(new ReaderFirstNameComparator());
+        result.sort(comparator);
         return result;
     }
 }
