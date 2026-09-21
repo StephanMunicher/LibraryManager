@@ -43,10 +43,6 @@ public class Repository {
         return books.get(id);
     }
 
-    public Map<Integer, Book> getBooks() {
-        return Map.copyOf(books);
-    }
-
     public void addReader(Reader reader) {
         if (reader == null) {
              throw new NullPointerException();
@@ -73,10 +69,6 @@ public class Repository {
 
     public Reader findReaderById(int id) {
         return readers.get(id);
-    }
-
-    public Map<Integer, Reader> getReaders() {
-        return Map.copyOf(readers);
     }
 
     public void addLoan(Loan loan) {
