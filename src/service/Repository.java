@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Repository {
     private final Map<Integer, Book> books = new HashMap<>();
@@ -89,22 +90,22 @@ public class Repository {
         loans.add(loan);
     }
 
-    public List<Book> findBooksByAuthor(String author) {
+    private List<Book> findBooks(Predicate<Book> filter) {
         return books.values().stream()
-                .filter(b -> author.equals(b.getAuthor()))
+                .filter(filter)
                 .toList();
+    }
+
+    public List<Book> findBooksByAuthor(String author) {
+        return findBooks(b -> b.getAuthor().toLowerCase().contains(author.toLowerCase()));
     }
 
     public List<Book> findBooksByGenre(String genre) {
-        return books.values().stream()
-                .filter(b -> genre.equals(b.getGenre()))
-                .toList();
+        return findBooks(b -> b.getGenre().toLowerCase().contains(genre.toLowerCase()));
     }
 
     public List<Book> findBooksByTitle(String title) {
-        return books.values().stream()
-                .filter(b -> title.equals(b.getTitle()))
-                .toList();
+        return findBooks(b -> b.getTitle().toLowerCase().contains(title.toLowerCase()));
     }
 
     public List<Book> getAllBooks() {
