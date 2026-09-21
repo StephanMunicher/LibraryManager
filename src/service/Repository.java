@@ -153,4 +153,9 @@ public class Repository {
     public boolean removeLoan(int bookId) {
         return loans.removeIf(l -> l.getBook().getId() == bookId);
     }
+
+    public boolean isBookBorrowed(int bookId) {
+        return loans.stream()
+                .anyMatch(l -> bookId == l.getBook().getId());
+    }
 }

@@ -27,10 +27,8 @@ public class LibraryService {
             throw new IllegalArgumentException("The Reader not found!");
         }
 
-        for (Loan loan : repository.getLoans()) {
-            if (loan.getBook().equals(foundBook)) {
-                throw new IllegalStateException("The book has already borrowed by another reader!");
-            }
+        if (repository.isBookBorrowed(bookId)) {
+            throw new IllegalStateException("The book has already borrowed by another reader!");
         }
 
         repository.addLoan(new Loan(foundBook, foundReader));
