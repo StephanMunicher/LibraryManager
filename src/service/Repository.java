@@ -79,10 +79,6 @@ public class Repository {
         return Map.copyOf(readers);
     }
 
-    public List<Loan> getLoans() {
-        return List.copyOf(loans);
-    }
-
     public void addLoan(Loan loan) {
         if (loan == null) {
             throw new NullPointerException();
