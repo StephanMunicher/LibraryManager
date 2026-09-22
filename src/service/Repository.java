@@ -117,10 +117,14 @@ public class Repository {
         return List.copyOf(readers.values());
     }
 
-    public List<Reader> getReadersByFullName(String fullName) {
+    private List<Reader> findReaders(Predicate<Reader> filter) {
         return readers.values().stream()
-                .filter(r -> fullName.equals(r.getFullName()))
+                .filter(filter)
                 .toList();
+    }
+
+    public List<Reader> getReadersByFullName(String fullName) {
+        return findReaders(r -> r.getFullName().toLowerCase().contains(fullName.toLowerCase()));
     }
 
     public List<Book> getBooksByReader(int readerId) {
