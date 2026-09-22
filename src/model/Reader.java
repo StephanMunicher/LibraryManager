@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Reader {
     private final int id;
-    private String firstName;
-    private String secondName;
+    private final String firstName;
+    private final String secondName;
 
     public Reader(int id, String firstName, String secondName) {
         if (firstName == null || secondName == null) {

@@ -30,10 +30,8 @@ public class Repository {
             throw new IllegalArgumentException("The book not found!");
         }
 
-        for (Loan loan : loans) {
-            if (loan.getBook().equals(book)) {
-                throw new IllegalStateException("The book is currently borrowed!");
-            }
+        if (isBookBorrowed(bookId)) {
+            throw new IllegalStateException("The book is currently borrowed!");
         }
 
         books.remove(bookId);
@@ -58,10 +56,8 @@ public class Repository {
             throw new IllegalArgumentException("The reader not found!");
         }
 
-        for (Loan loan : loans) {
-            if (loan.getReader().equals(reader)) {
-                throw new IllegalStateException("The reader has borrowed a book!");
-            }
+        if (isReaderBorrowing(readerId)) {
+            throw new IllegalStateException("The reader has borrowed a book!");
         }
 
         readers.remove(readerId);
@@ -108,8 +104,7 @@ public class Repository {
 
     public List<Book> getAvailableBooks() {
         return books.values().stream()
-                .filter(b -> loans.stream()
-                        .noneMatch(l -> l.getBook().equals(b)))
+                .filter(b -> !isBookBorrowed(b.getId()))
                 .toList();
     }
 
@@ -149,5 +144,10 @@ public class Repository {
     public boolean isBookBorrowed(int bookId) {
         return loans.stream()
                 .anyMatch(l -> bookId == l.getBook().getId());
+    }
+
+    public boolean isReaderBorrowing(int readerId) {
+        return loans.stream()
+                .anyMatch(l -> readerId == l.getReader().getId());
     }
 }
