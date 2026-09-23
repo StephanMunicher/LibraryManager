@@ -1,5 +1,9 @@
 package service;
 
+import exceptions.BookAlreadyBorrowedException;
+import exceptions.BookNotBorrowedException;
+import exceptions.BookNotFoundException;
+import exceptions.ReaderNotFoundException;
 import model.Book;
 import model.Loan;
 import model.Reader;
@@ -21,16 +25,16 @@ public class LibraryService {
     public void borrowBook(int bookId, int readerId) {
         Book foundBook = repository.findBookById(bookId);
         if (foundBook == null) {
-            throw new IllegalArgumentException("The book not found!");
+            throw new BookNotFoundException("The book not found!");
         }
 
         Reader foundReader = repository.findReaderById(readerId);
         if (foundReader == null) {
-            throw new IllegalArgumentException("The Reader not found!");
+            throw new ReaderNotFoundException("The Reader not found!");
         }
 
         if (repository.isBookBorrowed(bookId)) {
-            throw new IllegalStateException("The book has already borrowed by another reader!");
+            throw new BookAlreadyBorrowedException("The book has already borrowed by another reader!");
         }
 
         repository.addLoan(new Loan(foundBook, foundReader, LocalDate.now()));
@@ -39,13 +43,13 @@ public class LibraryService {
     public void returnBook(int bookId) {
         Book foundBook = repository.findBookById(bookId);
         if (foundBook == null) {
-            throw new IllegalArgumentException("The book not found!");
+            throw new BookNotFoundException("The book not found!");
         }
 
         boolean removed = repository.removeLoan(bookId);
 
         if (!removed) {
-            throw new IllegalStateException("The book is not borrowed!");
+            throw new BookNotBorrowedException("The book is not borrowed!");
         }
     }
 
