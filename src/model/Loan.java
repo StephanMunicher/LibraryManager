@@ -1,18 +1,21 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Loan {
     private final Reader reader;
     private final Book book;
+    private final LocalDate loanDate;
 
-    public Loan(Book book, Reader reader) {
-        if (book == null || reader == null) {
+    public Loan(Book book, Reader reader, LocalDate loanDate) {
+        if (book == null || reader == null || loanDate == null) {
             throw new NullPointerException();
         }
 
         this.book = book;
         this.reader = reader;
+        this.loanDate = loanDate;
     }
 
     public Book getBook() {
@@ -21,6 +24,10 @@ public class Loan {
 
     public Reader getReader() {
         return reader;
+    }
+
+    public LocalDate getLoanDate() {
+        return loanDate;
     }
 
     @Override
@@ -49,6 +56,7 @@ public class Loan {
         return "Loan{" +
                 "book = " + book +
                 ", reader = " + reader +
+                ", loanDate = " + loanDate +
                 '}';
     }
 }

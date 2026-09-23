@@ -5,6 +5,7 @@ import model.Loan;
 import model.Reader;
 import repository.Repository;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class LibraryService {
             throw new IllegalStateException("The book has already borrowed by another reader!");
         }
 
-        repository.addLoan(new Loan(foundBook, foundReader));
+        repository.addLoan(new Loan(foundBook, foundReader, LocalDate.now()));
     }
 
     public void returnBook(int bookId) {
