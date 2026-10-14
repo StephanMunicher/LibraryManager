@@ -12,7 +12,7 @@ public class Main {
         LibraryService libraryService = new LibraryService(repository, sortService);
         LibraryConsole libraryConsole = new LibraryConsole(libraryService);
 
-        Book book1 = new Book(1, "111", "111", 2000, "111");
+        Book book1 = new Book(100, "111", "111", 2000, "111");
         repository.addBook(book1);
         Reader reader1 = new Reader(1, "111", "111");
         repository.addReader(reader1);

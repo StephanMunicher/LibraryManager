@@ -43,13 +43,10 @@ public class LibraryConsole {
             }
 
             choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter ID: ");
-                    int bookId = scanner.nextInt();
-                    scanner.nextLine();
-
                     System.out.print("Enter title: ");
                     String title = scanner.nextLine();
 
@@ -63,9 +60,7 @@ public class LibraryConsole {
                     System.out.print("Enter genre: ");
                     String genre = scanner.nextLine();
 
-                    Book book = new Book(bookId, title, author, bookYear, genre);
-
-                    libraryService.addBook(book);
+                    libraryService.addBook(title, author, bookYear, genre);
                     System.out.println("Book added successfully!");
                     break;
                 case 3:
