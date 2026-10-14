@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Objects;
-
 public class Reader {
     private final int id;
     private final String firstName;
@@ -9,11 +7,31 @@ public class Reader {
 
     public Reader(int id, String firstName, String secondName) {
         if (firstName == null || secondName == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Reader names cannot be null.");
         }
 
-        if (id <= 0 || firstName.length() <= 1 || secondName.length() <= 1) {
-            throw new IllegalArgumentException();
+        firstName = firstName.strip();
+        secondName = secondName.strip();
+
+        if (firstName.isEmpty() || secondName.isEmpty()) {
+            throw new IllegalArgumentException("Reader names cannot be empty");
+        }
+
+        if (!firstName.matches("[\\p{L}\\p{M} '-’]+")
+                || !secondName.matches("[\\p{L}\\p{M} '-’]+")) {
+            throw new IllegalArgumentException(
+                    "Names can contain only letters, spaces, hyphens, and apostrophes."
+            );
+        }
+
+        if (id <= 0) {
+            throw new IllegalArgumentException("Reader ID must be positive.");
+        }
+
+        if (firstName.length() < 2 || secondName.length() < 2) {
+            throw new IllegalArgumentException(
+                    "Names must contain at least 2 characters."
+            );
         }
 
         this.id = id;

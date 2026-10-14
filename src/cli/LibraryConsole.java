@@ -54,14 +54,24 @@ public class LibraryConsole {
                     String author = scanner.nextLine();
 
                     System.out.print("Enter book year: ");
-                    int bookYear = scanner.nextInt();
-                    scanner.nextLine();
+                    String yearInput = scanner.nextLine();
+
+                    if (!yearInput.matches("\\d+")) {
+                        System.out.println("Book year must contain digits only.");
+                        break;
+                    }
+
+                    int bookYear = Integer.parseInt(yearInput);
 
                     System.out.print("Enter genre: ");
                     String genre = scanner.nextLine();
 
-                    libraryService.addBook(title, author, bookYear, genre);
-                    System.out.println("Book added successfully!");
+                    try {
+                        libraryService.addBook(title, author, bookYear, genre);
+                        System.out.println("Book added successfully!");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Could not add book: " + e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.print("Enter first name: ");
@@ -70,8 +80,12 @@ public class LibraryConsole {
                     System.out.print("Enter second name: ");
                     String secondName = scanner.nextLine();
 
-                    libraryService.addReader(firstName, secondName);
-                    System.out.println("Reader added successfully!");
+                    try {
+                        libraryService.addReader(firstName, secondName);
+                        System.out.println("Reader added successfully!");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Could not add reader: " + e.getMessage());
+                    }
                     break;
                 case 3:
                     System.out.print("Enter book ID: ");
