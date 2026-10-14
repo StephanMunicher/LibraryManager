@@ -17,6 +17,7 @@ public class LibraryService {
     private final Repository repository;
     private final SortService sortService;
     int nextBookId = 1;
+    int nextReaderId = 1;
 
     public LibraryService(Repository repository, SortService sortService) {
         this.repository = repository;
@@ -31,6 +32,12 @@ public class LibraryService {
         Book book = new Book(nextBookId, title, author, bookYear, genre);
         repository.addBook(book);
         nextBookId++;
+    }
+
+    public void addReader(String firstName, String secondName) {
+        Reader reader = new Reader(nextReaderId, firstName, secondName);
+        repository.addReader(reader);
+        nextReaderId++;
     }
 
     public void borrowBook(int bookId, int readerId) {
