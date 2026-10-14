@@ -16,6 +16,7 @@ import java.util.List;
 public class LibraryService {
     private final Repository repository;
     private final SortService sortService;
+    int nextBookId = 1;
 
     public LibraryService(Repository repository, SortService sortService) {
         this.repository = repository;
@@ -24,6 +25,12 @@ public class LibraryService {
 
     public void addBook(Book book) {
         repository.addBook(book);
+    }
+
+    public void addBook(String title, String author, int bookYear, String genre) {
+        Book book = new Book(nextBookId, title, author, bookYear, genre);
+        repository.addBook(book);
+        nextBookId++;
     }
 
     public void borrowBook(int bookId, int readerId) {
