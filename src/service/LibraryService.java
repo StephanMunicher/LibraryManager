@@ -22,6 +22,10 @@ public class LibraryService {
         this.sortService = sortService;
     }
 
+    public void addBook(Book book) {
+        repository.addBook(book);
+    }
+
     public void borrowBook(int bookId, int readerId) {
         Book foundBook = repository.findBookById(bookId);
         if (foundBook == null) {
