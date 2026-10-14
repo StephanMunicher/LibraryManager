@@ -14,7 +14,7 @@ public class Main {
 
         Book book1 = new Book(100, "111", "111", 2000, "111");
         repository.addBook(book1);
-        Reader reader1 = new Reader(1, "111", "111");
+        Reader reader1 = new Reader(100, "111", "111");
         repository.addReader(reader1);
 
         libraryConsole.run();

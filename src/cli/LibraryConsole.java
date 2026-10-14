@@ -63,6 +63,16 @@ public class LibraryConsole {
                     libraryService.addBook(title, author, bookYear, genre);
                     System.out.println("Book added successfully!");
                     break;
+                case 2:
+                    System.out.print("Enter first name: ");
+                    String firstName = scanner.nextLine();
+
+                    System.out.print("Enter second name: ");
+                    String secondName = scanner.nextLine();
+
+                    libraryService.addReader(firstName, secondName);
+                    System.out.println("Reader added successfully!");
+                    break;
                 case 3:
                     System.out.print("Enter book ID: ");
                     int id1 = scanner.nextInt();
