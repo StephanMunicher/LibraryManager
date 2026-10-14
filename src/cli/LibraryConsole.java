@@ -30,7 +30,7 @@ public class LibraryConsole {
             System.out.println("2. Add reader");
             System.out.println("3. Borrow book");
             System.out.println("4. Return book");
-            System.out.println("5. Show all book");
+            System.out.println("5. Show all books");
             System.out.println("6. Show all readers");
             System.out.println("0. Exit");
 
@@ -54,14 +54,24 @@ public class LibraryConsole {
                     String author = scanner.nextLine();
 
                     System.out.print("Enter book year: ");
-                    int bookYear = scanner.nextInt();
-                    scanner.nextLine();
+                    String yearInput = scanner.nextLine();
+
+                    if (!yearInput.matches("\\d+")) {
+                        System.out.println("Book year must contain digits only.");
+                        break;
+                    }
+
+                    int bookYear = Integer.parseInt(yearInput);
 
                     System.out.print("Enter genre: ");
                     String genre = scanner.nextLine();
 
-                    libraryService.addBook(title, author, bookYear, genre);
-                    System.out.println("Book added successfully!");
+                    try {
+                        libraryService.addBook(title, author, bookYear, genre);
+                        System.out.println("Book added successfully!");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Could not add book: " + e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.print("Enter first name: ");
@@ -70,15 +80,33 @@ public class LibraryConsole {
                     System.out.print("Enter second name: ");
                     String secondName = scanner.nextLine();
 
-                    libraryService.addReader(firstName, secondName);
-                    System.out.println("Reader added successfully!");
+                    try {
+                        libraryService.addReader(firstName, secondName);
+                        System.out.println("Reader added successfully!");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Could not add reader: " + e.getMessage());
+                    }
                     break;
                 case 3:
                     System.out.print("Enter book ID: ");
-                    int id1 = scanner.nextInt();
+                    String bookId = scanner.nextLine();
+
+                    if (!bookId.matches("\\d+")) {
+                        System.out.println("ID must contain digits only.");
+                        break;
+                    }
+
+                    int id1 = Integer.parseInt(bookId);
 
                     System.out.print("Enter reader ID: ");
-                    int id2 = scanner.nextInt();
+                    String readerId = scanner.nextLine();
+
+                    if (!readerId.matches("\\d+")) {
+                        System.out.println("ID must contain digits only.");
+                        break;
+                    }
+
+                    int id2 = Integer.parseInt(readerId);
 
                     try {
                         libraryService.borrowBook(id1, id2);
@@ -93,7 +121,14 @@ public class LibraryConsole {
                     break;
                 case 4 :
                     System.out.print("Enter book ID: ");
-                    int id = scanner.nextInt();
+                    String idString = scanner.nextLine();
+
+                    if (!idString.matches("\\d+")) {
+                        System.out.println("ID must contain digits only.");
+                        break;
+                    }
+
+                    int id = Integer.parseInt(idString);
 
                     try {
                         libraryService.returnBook(id);

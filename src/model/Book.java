@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Book {
@@ -11,11 +12,37 @@ public class Book {
 
     public Book(int id, String title, String author, int bookYear, String genre) {
         if (title == null || author == null || genre == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Book parameters cannot be null.");
+        }
+
+        title = title.strip();
+        author = author.strip();
+        genre = genre.strip();
+
+        if (title.isEmpty() || author.isEmpty() || genre.isEmpty()) {
+            throw new IllegalArgumentException("Book parameters cannot be empty.");
+        }
+
+        if (!title.matches("[\\p{L}\\p{M}\\p{N} .,!?;:'\"()\\-–—&]+")
+                || !author.matches("[\\p{L}\\p{M} '-’]+")
+                || !genre.matches("[\\p{L}\\p{M}\\p{N} &/-]+")) {
+            throw new IllegalArgumentException(
+                    "Parameters can contain only correct symbols."
+            );
         }
 
         if (id <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Book ID must be positive.");
+        }
+
+        if (author.length() < 2 || genre.length() < 2) {
+            throw new IllegalArgumentException(
+                    "Parameters must contain correct number of characters."
+            );
+        }
+
+        if(bookYear <= 0 || bookYear > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Book year must be between 1 and the current year.");
         }
 
         this.id = id;
@@ -47,17 +74,17 @@ public class Book {
 
     @Override
     public boolean equals(Object obj) {
-       if (obj == null) {
-           return false;
-       }
+        if (obj == null) {
+            return false;
+        }
 
-       if (obj.getClass() != this.getClass()) {
-           return false;
-       }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
 
-       final Book other = (Book) obj;
+        final Book other = (Book) obj;
 
-       return this.id == other.id;
+        return this.id == other.id;
     }
 
     @Override

@@ -24,10 +24,6 @@ public class LibraryService {
         this.sortService = sortService;
     }
 
-    public void addBook(Book book) {
-        repository.addBook(book);
-    }
-
     public void addBook(String title, String author, int bookYear, String genre) {
         Book book = new Book(nextBookId, title, author, bookYear, genre);
         repository.addBook(book);
